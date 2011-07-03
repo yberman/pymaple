@@ -1,0 +1,308 @@
+
+
+    # ---------------------------------------------------------------------- #
+    #                        Set/Query Library Path                          #
+    # ---------------------------------------------------------------------- #
+
+    # Returns an EXPSEQ of the current library path.  If the argument 'expseq'
+       is non NULL, then the library path is set to the given value.  
+       See ?libname for more detail.  
+
+       To set libname to a single directory use:
+
+           MapleLibName(kv,ToMapleString(kv,"/usr/local/lib"))
+
+       To specify multiple paths, use:
+
+           MapleLibName(kv,ToMapleExpressionSequence(kv,2,
+	        ToMapleToMapleString(kv,"/usr/local/lib"),
+	        ToMapleToMapleString(kv,"/home/mylib")))
+    #
+    ALGEB MapleLibName(MKernelVector kv, ALGEB expseq)
+
+    # ---------------------------------------------------------------------- #
+    #                       Query/Set Kernel Options                         #
+    # ---------------------------------------------------------------------- #
+
+    # To query an option pass in val = NULL.  
+       See ?kernelopts for a list of possible options and their possible values.
+       Returns the value of the given setting prior to update (or the current
+-       value if val=NULL). 
+    #
+    ALGEB MapleKernelOptions(MKernelVector kv, char* option, ALGEB val)
+
+
+    # ---------------------------------------------------------------------- #
+    #                       Assign to Maple Variables                        #
+    # ---------------------------------------------------------------------- #
+
+    ALGEB MapleAssign(MKernelVector kv, ALGEB lhs, ALGEB rhs)
+
+    ALGEB MapleAssignIndexed(MKernelVector kv, ALGEB lhs, 
+			    M_INT dim, M_POINTER(int) ind, ALGEB rhs)
+
+
+    # ---------------------------------------------------------------------- #
+    #             Error Handling and User Information                        #
+    # ---------------------------------------------------------------------- #
+
+    # Raising Errors #
+    void MapleRaiseError(MKernelVector kv, char* msg)
+    void MapleRaiseError1(MKernelVector kv, char* msg, ALGEB arg1)
+    void MapleRaiseError2(MKernelVector kv, char* msg, ALGEB arg1, ALGEB arg2)
+
+    # Evaluate a C Function, Trapping Any Raised Errors #
+    void* MapleTrapError(MKernelVector kv, 
+          void* (*proc) ( void* data), void* data, M_BOOL *errorflag)
+
+    # Provide Run-time Information #
+    void MapleUserInfo(MKernelVector kv, int level, char* name, 
+                             char* msg)   
+
+    # output to Maple's output stream #
+    int MaplePrintf(MKernelVector kv, const char* , ...)
+    int MapleALGEB_Printf(MKernelVector kv, const char* , ...)
+    ALGEB MapleALGEB_SPrintf(MKernelVector kv, const char* , ...)
+    int MapleALGEB_Printf0(MKernelVector kv, const char* format)
+    int MapleALGEB_Printf1(MKernelVector kv, const char* format,
+         ALGEB a1)
+    int MapleALGEB_Printf2(MKernelVector kv, const char* format,
+         ALGEB a1, ALGEB a2)
+    int MapleALGEB_Printf3(MKernelVector kv, const char* format,
+         ALGEB a1, ALGEB a2, ALGEB a3)
+    int MapleALGEB_Printf4(MKernelVector kv, const char* format,
+         ALGEB a1, ALGEB a2, ALGEB a3, ALGEB a4)
+    ALGEB MapleALGEB_SPrintf0(MKernelVector kv, const char* format)
+    ALGEB MapleALGEB_SPrintf1(MKernelVector kv, const char* format,
+         ALGEB a1)
+    ALGEB MapleALGEB_SPrintf2(MKernelVector kv, const char* format,
+         ALGEB a1, ALGEB a2)
+    ALGEB MapleALGEB_SPrintf3(MKernelVector kv, const char* format,
+         ALGEB a1, ALGEB a2, ALGEB a3)
+    ALGEB MapleALGEB_SPrintf4(MKernelVector kv, const char* format,
+         ALGEB a1, ALGEB a2, ALGEB a3, ALGEB a4)
+
+    # obsolete #
+    void InitMaplePrintf(void*)
+    int OldMaplePrintf( const char* , ...)
+
+
+    # ---------------------------------------------------------------------- #
+    #                          Arithmetic Functions                          #
+    # ---------------------------------------------------------------------- #
+    ALGEB MapleNumericAdd(MKernelVector kv, ALGEB a, ALGEB b)
+       
+    ALGEB MapleNumericSubtract(MKernelVector kv, ALGEB a, 
+					        ALGEB b)
+
+    ALGEB MapleNumericMultiply(MKernelVector kv, ALGEB a, 
+					        ALGEB b)
+
+    ALGEB MapleNumericPower(MKernelVector kv, ALGEB a, 
+					     M_INT n)
+
+    ALGEB MapleIntegerDivide(MKernelVector kv, ALGEB a, 
+					      ALGEB b, ALGEB *r)
+        
+    ALGEB MapleFloatDivide(MKernelVector kv, ALGEB a, ALGEB b)
+
+    M_INT MapleIntegerAbsCompare(MKernelVector kv, ALGEB a, 
+					          ALGEB b)
+
+
+    # ---------------------------------------------------------------------- #
+    #       Rectangular Table (Vector, Matrix, Array) Manipulation           #
+    # ---------------------------------------------------------------------- #
+
+    void RTableAppendAttribute(MKernelVector kv, RTableSettings *s, char* name)
+
+    void RTableAppendIndFn(MKernelVector kv, RTableSettings *s, 
+                               ALGEB indfn)
+
+    RTableData RTableAssign(MKernelVector kv, ALGEB rt, 
+                     M_POINTER(int) index, RTableData val)
+
+    void RTableAssignRef(MKernelVector kv, ALGEB rt, 
+                     M_POINTER(int) index, RTableData *val)
+
+    ALGEB RTableCopy(MKernelVector kv, RTableSettings *s, 
+                                ALGEB rt)
+
+    ALGEB RTableCopyImPart(MKernelVector kv, RTableSettings *s, 
+                           ALGEB rt)
+
+    ALGEB RTableCopyRealPart(MKernelVector kv, RTableSettings *s, 
+                                  ALGEB rt)
+
+    ALGEB RTableCreate(MKernelVector kv, RTableSettings *s, 
+                             void* pdata, M_POINTER(int) bounds)
+
+    void* RTableDataBlock(MKernelVector kv, ALGEB rt)
+
+    void RTableGetDefaults(MKernelVector kv, RTableSettings *s)
+
+    void RTableGetSettings(MKernelVector kv, RTableSettings *s, 
+                               ALGEB rt)
+
+    M_INT RTableIndFn(MKernelVector kv, ALGEB rt, M_INT num)
+
+    ALGEB RTableIndFnArgs(MKernelVector kv, ALGEB rt, M_INT num)
+
+    M_BOOL RTableIsReal(MKernelVector kv, ALGEB rt)
+
+    M_INT RTableLowerBound(MKernelVector kv, ALGEB rt, M_INT dim)
+
+    M_INT RTableNumElements(MKernelVector kv, ALGEB rt)
+
+    M_INT RTableNumDimensions(MKernelVector kv, ALGEB rt)
+
+    RTableData RTableSelect(MKernelVector kv, ALGEB rt, 
+                     M_POINTER(int) index)
+
+    void RTableSetAttribute(MKernelVector kv, RTableSettings *s, 
+                     char* name)
+
+    void RTableSetIndFn(MKernelVector kv, RTableSettings *s, 
+                    ALGEB indfn)
+
+    void RTableSetType(MKernelVector kv, RTableSettings *s, 
+                     M_INT id, char* name)
+
+    void RTableSparseCompact(MKernelVector kv, ALGEB rt)
+
+    NAG_POINTER(int)  RTableSparseIndexRow(MKernelVector kv, ALGEB rt, 
+                    M_INT dim)
+
+    ALGEB RTableSparseIndexSort(MKernelVector kv, ALGEB rt, 
+                    M_INT by_dim)
+
+    void RTableSparseSetNumElems(MKernelVector kv, ALGEB rt, 
+                    M_INT num) 
+
+    M_INT RTableSparseSize(MKernelVector kv, ALGEB rt)
+
+    void RTableSparseResize(MKernelVector kv, ALGEB rt, M_INT size)
+
+    M_INT RTableUpperBound(MKernelVector kv, ALGEB rt, M_INT dim)
+
+    ALGEB RTableZipReIm(MKernelVector kv, RTableSettings *s, 
+                                ALGEB rt_re, ALGEB rt_im)
+
+    # Wrapper Helper Functions #
+    # creates a foreign maple array referencing 'ptr' #
+    void* ArrayToMaple(MKernelVector kv, void* ptr, 
+	        M_INT data_type, M_INT storage, M_INT p1, M_INT p2, 
+	        M_INT order, ALGEB indfn, M_INT subtype,
+	        ALGEB *ref, M_INT num_dims, M_INT offset, 
+	        # low-bound 1, upp-bound 1, low-bound 2, upp-bound 2 # ...)
+
+    # creates a C array from 'rt', or just points to it's data if params match #
+    void* MapleToArray(MKernelVector kv, ALGEB rt,
+	        M_INT data_type, M_INT storage, M_INT p1, M_INT p2, 
+	        M_INT order, ALGEB indfn, M_INT subtype,
+	        ALGEB *ref, M_INT num_dims, M_INT offset, 
+	        # low-bound 1, upp-bound 1, low-bound 2, upp-bound 2 # ...) 
+
+    # allocate a new array and return it's data pointer #
+    void* MapleAllocArray(MKernelVector kv, ALGEB rt,
+	        M_INT data_type, M_INT storage, M_INT p1, M_INT p2, 
+	        M_INT order, ALGEB indfn, M_INT subtype,
+	        ALGEB *ref, M_INT num_dims, M_INT offset, 
+	        # low-bound 1, upp-bound 1, low-bound 2, upp-bound 2 # ...) 
+
+    # Data Selection #
+    ALGEB MapleSelectImaginaryPart(MKernelVector kv, ALGEB s)
+
+    ALGEB MapleSelectIndexed(MKernelVector kv, ALGEB s, M_INT dim, M_POINTER(int) ind)
+
+    ALGEB MapleSelectRealPart(MKernelVector kv, ALGEB s)
+
+    # Data Uniquification #
+    ALGEB MapleUnique(MKernelVector kv,ALGEB s)
+
+    # ---------------------------------------------------------------------- #
+    #                Extra Call Backs                                        #
+    # ---------------------------------------------------------------------- #
+
+    # set a function to be called after a restart #
+    void RegisterRestartCallBack(MKernelVector kv,
+        void (*restartCB)( void* data))
+
+
+    # ------------------------------------------------------------------------ #
+    #                Access to the Random Number Generator                     #
+    # ------------------------------------------------------------------------ #
+
+    INTEGER32 MapleRandomInt32(void*)
+    INTEGER64 MapleRandomInt64(void*)
+    M_INT MapleRandomM_INT(void*)
+    double MapleRandomDouble01(void*)
+    ALGEB MapleRandomSoftwareFloat01(void*)
+    ALGEB MapleRandomSoftwareInteger(MKernelVector kv, M_INT bits)
+    M_INT MapleRandomCalcBits(MKernelVector kv, ALGEB range)
+    INTEGER32 MapleRandomRangeInt32(MKernelVector kv, INTEGER32 range, M_INT bits)
+    ALGEB MapleRandomRangeSoftwareInt(MKernelVector kv, ALGEB range, M_INT bits)
+
+
+    # ---------------------------------------------------------------------- #
+    #                       Access the Help System                           #
+    # ---------------------------------------------------------------------- #
+
+    # Possible values of the attribute passed to the writeAttrib call back. #
+    #define FN_NORM  0 	# normal text mode  #
+    #define FN_ITAL  1	# italic text mode #
+    #define FN_BOLD  3	# boldfaced text mode #
+    #define FN_UNDER 4	# underlined text mode #
+
+    # 
+        The HelpLookUpText function searches for and retrieves a help page or 
+        a section of a help page, based on the topic passed to it. The results 
+        are passed as a stream of characters and attributes to the specified 
+        call-back functions. 
+
+        topic:  Specifies the help page retrieved
+
+        section:  Indicates which section of the page to display. If this
+	         is passed as "" or NULL, the entire page is displayed. 
+                 To restrict display to a particular section of the page, 
+                 one of the following values can be passed: 
+
+	          "usage" 
+		        Shows just the function name (one-line description) and 
+		        calling sequence information. 
+	          "description" 
+		        Shows the detailed description of the function. 
+	          "examples" 
+		        Shows examples of the function's usage. 
+	          "seealso" 
+		        Shows a list of alternate topics that may be related to 
+		        this function. 
+
+        writeChar: Function to which output is sent.  The writeChar
+	           function can terminate rendering by returning TRUE. 
+
+        writeAttrib: Function to which attribute information is passed.
+	             Each given attribute applies to all subsequent characters
+                     sent to writeChar until a new attribute is given.
+                     Possible attribute values are describe above (FN_*). 
+		     The writeAttrib function can be omitted by passing NULL 
+		     for the writeAttrib parameter. 
+
+        width:  Indicates the width, in characters, to which the help
+	        information should be formatted. 
+
+        data: The data parameter given to StartMaple.
+
+        MapleHelp returns NULL if successful, or it returns a pointer 
+        to an error message if unsuccessful.
+
+    #
+
+    char*  MapleHelp( 
+       void*, 
+        char* topic, 
+        char* section,
+        M_BOOL (*writechar) ( void* data, int c),
+        M_BOOL (*writeattrib) ( void* data, int a),
+        int width, 
+        void* data)

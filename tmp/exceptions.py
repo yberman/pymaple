@@ -1,0 +1,9 @@
+class AbstractClassError(Exception): pass
+class MapleError(Exception): pass
+class MapleFatalError(Exception): pass
+class MapleStartError(MapleError): pass
+class MaplePointerError(MapleError): pass
+class MapleEvalStatementError(MapleError): pass
+class MapleEvalProcError(MapleError): pass
+class MapleRenderToStringError(MapleError): pass
+class MapleEvalhfError(MapleError): pass
