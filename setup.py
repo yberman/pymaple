@@ -14,7 +14,6 @@ except:
 
 # Define some variables
 maple_path = '/home/chips/.bin/maple10' #TODO: do not hardcode this!
-#maple_path = '/home/chips/.bin/maple13' #TODO: do not hardcode this!
 maple_lib_path = os.path.join(maple_path, 'bin.IBM_INTEL_LINUX')
 os.environ['MAPLE'] = maple_path
 os.environ['LD_LIBRARY_PATH'] = maple_lib_path
